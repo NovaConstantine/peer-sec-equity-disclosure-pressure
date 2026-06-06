@@ -1,0 +1,26 @@
+# Local input data
+data/
+*.dta
+
+# Generated SEC downloads and derived outputs
+output/
+outputs/
+sec_comment_output/
+comment_texts/
+*.log
+
+# Large/intermediate tables
+*.csv
+!examples/*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
