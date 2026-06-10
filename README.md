@@ -11,7 +11,7 @@ This is a `v0.1-pre` public draft. It is ready for code sharing and replication 
 The pipeline has four steps:
 
 1. Provide a firm-year panel.
-2. Download SEC-originated `UPLOAD` comment letters for the panel's unique CIKs.
+2. Download SEC-originated `UPLOAD` comment letters for the panel's unique CIKs and extract usable text from PDF, TXT, or HTML source documents.
 3. Classify comment-letter text into equity-focused financing-constraint topics.
 4. Merge the classified topics back to the panel, build firm-year SEC Equity Disclosure Pressure, and build lagged leave-one-out peer variables.
 
@@ -61,7 +61,7 @@ Create an environment and install dependencies:
 pip install -r requirements.txt
 ```
 
-The crawler uses Python standard-library HTTP tools, not `requests`, so the external dependencies are mainly for reading Stata files, processing tables, and building peer variables.
+The crawler uses Python standard-library HTTP tools, not `requests`. PDF comment letters are extracted with `pdfminer.six`; table and Stata support use `pandas`, `numpy`, and `pyreadstat`.
 
 ## Input Panel
 
@@ -126,11 +126,14 @@ Main outputs:
 output/sample_cik.csv
 output/sec_comment_letter_filing_level.csv
 output/sec_comment_firmyear.csv
+output/raw_filings/
 output/comment_texts/
 output/crawl_log.csv
 ```
 
 The crawler keeps SEC-originated `UPLOAD` letters. Company response letters (`CORRESP`) are not used for the main variable.
+
+The crawler saves the raw SEC primary document under `output/raw_filings/` and the extracted plain text under `output/comment_texts/`. PDF letters are processed with `pdfminer.six`. The filing-level metadata includes `source_doc_type`, `extraction_method`, `raw_file`, `text_file`, `text_length`, `text_extraction_error`, and `text_starts_raw_pdf`. If extracted text still begins with `%PDF`, it is marked as failed rather than silently passed to the classifier.
 
 ### SEC Fair-Access Note
 
@@ -196,5 +199,6 @@ peer_sec_equity_pressure_ff48
 - Use `--resume` when crawling SEC data.
 - Use a valid SEC User-Agent.
 - Respect SEC fair-access expectations and avoid aggressive request rates.
+- Confirm `text_starts_raw_pdf` is zero before classification.
 - Validate the classifier on a random sample before using the variable in a paper.
 - If your panel uses a different industry classification, pass the relevant column through `--peer-groups`.

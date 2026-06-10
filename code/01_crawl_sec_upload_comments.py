@@ -2,8 +2,9 @@
 """
 Crawl SEC-originated comment letters (UPLOAD) for a sample of CIKs.
 
-The script intentionally uses only the Python standard library plus pandas so it
-can run in the current project environment without installing requests/bs4.
+The crawler saves the raw SEC filing document and a machine-readable text file.
+PDF letters are extracted with pdfminer.six; TXT/HTML letters are decoded and
+HTML-stripped directly.
 """
 
 from __future__ import annotations
@@ -15,6 +16,7 @@ import json
 import re
 import sys
 import time
+from io import BytesIO
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 from urllib.error import HTTPError, URLError
@@ -33,6 +35,11 @@ def add_local_deps() -> None:
 add_local_deps()
 
 import pandas as pd
+
+try:
+    from pdfminer.high_level import extract_text as pdf_extract_text
+except Exception:  # pragma: no cover
+    pdf_extract_text = None
 
 try:
     import pyreadstat
@@ -96,8 +103,13 @@ FILING_COLUMNS = [
     "reportDate",
     "primary_doc",
     "url",
+    "source_doc_type",
+    "extraction_method",
+    "raw_file",
     "text_file",
     "text_length",
+    "text_extraction_error",
+    "text_starts_raw_pdf",
     "liq_comment",
     "equity_liq_comment",
     "annual_related",
@@ -187,12 +199,94 @@ def strip_html(raw: str) -> str:
     return raw.strip()
 
 
-def fetch_text(url: str, user_agent: str, sleep: float, max_retries: int = 3) -> Tuple[str, str]:
+def decode_text_payload(payload: bytes) -> str:
+    for enc in ("utf-8", "latin-1", "cp1252"):
+        try:
+            return payload.decode(enc, errors="ignore")
+        except Exception:
+            continue
+    return payload.decode("utf-8", errors="ignore")
+
+
+def source_doc_type(url: str, primary_doc: str, payload: bytes) -> str:
+    name = f"{url} {primary_doc}".lower()
+    head = payload[:4096].lstrip().lower()
+    if payload[:5] == b"%PDF-" or ".pdf" in name:
+        return "pdf"
+    if any(ext in name for ext in [".htm", ".html"]) or b"<html" in head or b"<body" in head:
+        return "html"
+    return "text"
+
+
+def text_starts_raw_pdf(text: str) -> int:
+    return int((text or "").lstrip().startswith("%PDF"))
+
+
+def reusable_existing_text(text_path: Path) -> Optional[str]:
+    if not text_path.exists():
+        return None
+    text = text_path.read_text(encoding="utf-8", errors="ignore")
+    if not text.strip() or text_starts_raw_pdf(text):
+        return None
+    return text
+
+
+def extract_document_text(payload: bytes, url: str, primary_doc: str) -> Dict[str, object]:
+    doc_type = source_doc_type(url, primary_doc, payload)
+    method = ""
+    error = ""
+    text = ""
+
+    if doc_type == "pdf":
+        method = "pdfminer.six"
+        if pdf_extract_text is None:
+            error = "pdfminer.six is not installed"
+        else:
+            try:
+                text = pdf_extract_text(BytesIO(payload)) or ""
+            except Exception as exc:
+                error = f"pdf extraction failed: {exc}"
+    else:
+        method = "decode_strip_html" if doc_type == "html" else "decode_text"
+        text = decode_text_payload(payload)
+        if doc_type == "html":
+            text = strip_html(text)
+
+    text = re.sub(r"\s+", " ", text.replace("\xa0", " ")).strip()
+    starts_raw_pdf = text_starts_raw_pdf(text)
+    if starts_raw_pdf:
+        error = "; ".join([e for e in [error, "extracted text starts with raw PDF marker"] if e])
+        text = ""
+    if doc_type == "pdf" and not text:
+        error = "; ".join([e for e in [error, "empty PDF text extraction"] if e])
+
+    return {
+        "text": text,
+        "source_doc_type": doc_type,
+        "extraction_method": method,
+        "text_extraction_error": error,
+        "text_starts_raw_pdf": starts_raw_pdf,
+    }
+
+
+def fetch_document_text(
+    url: str,
+    primary_doc: str,
+    user_agent: str,
+    sleep: float,
+    max_retries: int = 3,
+) -> Tuple[bytes, Dict[str, object]]:
     payload, error = request_bytes(url, user_agent, sleep, max_retries)
     if not payload:
-        return "", error
-    raw = payload.decode("utf-8", errors="ignore")
-    return strip_html(raw), ""
+        return b"", {
+            "text": "",
+            "source_doc_type": source_doc_type(url, primary_doc, b""),
+            "extraction_method": "",
+            "text_extraction_error": error,
+            "text_starts_raw_pdf": 0,
+        }
+    result = extract_document_text(payload, url, primary_doc)
+    return payload, result
 
 
 def recent_block_to_rows(block: Dict, cik10: str) -> List[Dict]:
@@ -351,6 +445,158 @@ def progress_message(done: int, total: int, started_at: float, active_done: int)
     )
 
 
+def first_present(row: pd.Series, names: Iterable[str]) -> str:
+    for name in names:
+        if name in row.index and pd.notna(row.get(name)):
+            value = str(row.get(name)).strip()
+            if value and value.lower() != "nan":
+                return value
+    return ""
+
+
+def extract_letter_row(
+    filing: pd.Series,
+    cik10: str,
+    gvkey: str,
+    args: argparse.Namespace,
+    text_dir: Path,
+    raw_dir: Path,
+) -> Tuple[Optional[Dict[str, object]], str]:
+    accession = first_present(filing, ["accessionNumber", "accession", "accession_number"])
+    primary_doc = first_present(filing, ["primaryDocument", "primary_doc", "file_name", "filename"])
+    url = first_present(filing, ["url", "filing_url", "document_url"])
+    if not url:
+        url = build_archive_url(cik10, accession, primary_doc) or ""
+    if not url:
+        return None, f"{accession}: missing archive url"
+
+    if not primary_doc:
+        primary_doc = Path(url).name
+
+    safe_acc = re.sub(r"[^0-9A-Za-z]", "", accession)
+    safe_doc = re.sub(r"[^0-9A-Za-z_.-]", "_", primary_doc)
+    raw_path = raw_dir / f"{cik10}_{safe_acc}_{safe_doc}"
+    text_path = text_dir / f"{cik10}_{safe_acc}_{safe_doc}.txt"
+
+    extract_info: Dict[str, object]
+    text = reusable_existing_text(text_path)
+    if text is not None:
+        extract_info = {
+            "source_doc_type": source_doc_type(url, primary_doc, raw_path.read_bytes()[:16] if raw_path.exists() else b""),
+            "extraction_method": "existing_text",
+            "text_extraction_error": "",
+            "text_starts_raw_pdf": text_starts_raw_pdf(text),
+        }
+    else:
+        if raw_path.exists():
+            payload = raw_path.read_bytes()
+            extract_info = extract_document_text(payload, url, primary_doc)
+        else:
+            payload, extract_info = fetch_document_text(url, primary_doc, args.user_agent, sleep=args.sleep)
+            if payload:
+                raw_path.write_bytes(payload)
+        text = str(extract_info.get("text", ""))
+        text_path.write_text(text, encoding="utf-8", errors="ignore")
+
+    text_error = str(extract_info.get("text_extraction_error", ""))
+    cls = classify_text(text)
+    filing_date = first_present(filing, ["filingDate", "filing_date_public", "filing_date"])
+    comment_year = first_present(filing, ["filing_year", "comment_year"])
+    if not comment_year and filing_date:
+        dt = pd.to_datetime(filing_date, errors="coerce")
+        comment_year = str(int(dt.year)) if pd.notna(dt) else ""
+
+    out = {
+        "gvkey": gvkey,
+        "cik10": cik10,
+        "form": first_present(filing, ["form", "form_type"]) or "UPLOAD",
+        "accession": accession,
+        "filing_date_public": filing_date,
+        "comment_year": int(float(comment_year)) if comment_year else "",
+        "reportDate": first_present(filing, ["reportDate", "report_date"]),
+        "primary_doc": primary_doc,
+        "url": url,
+        "source_doc_type": extract_info.get("source_doc_type", ""),
+        "extraction_method": extract_info.get("extraction_method", ""),
+        "raw_file": str(raw_path),
+        "text_file": str(text_path),
+        "text_length": len(text),
+        "text_extraction_error": text_error,
+        "text_starts_raw_pdf": extract_info.get("text_starts_raw_pdf", 0),
+        **cls,
+    }
+    return out, text_error
+
+
+def recrawl_from_filing_csv(
+    args: argparse.Namespace,
+    text_dir: Path,
+    raw_dir: Path,
+    filing_path: Path,
+    firmyear_path: Path,
+    log_path: Path,
+) -> None:
+    old = pd.read_csv(args.filing_csv, dtype=str)
+    if "cik10" not in old.columns:
+        raise ValueError("--filing-csv must include cik10")
+    old["cik10"] = old["cik10"].apply(pad_cik)
+    if "gvkey" not in old.columns:
+        old["gvkey"] = ""
+    if "form" in old.columns:
+        old = old[old["form"].astype(str).str.upper().eq("UPLOAD")].copy()
+    year_col = "comment_year" if "comment_year" in old.columns else "filing_year" if "filing_year" in old.columns else ""
+    if year_col:
+        years = pd.to_numeric(old[year_col], errors="coerce")
+        old = old[years.between(args.start_year, args.end_year)].copy()
+    if args.limit is not None:
+        old = old.head(args.limit).copy()
+
+    done_ciks = set()
+    if args.resume:
+        log_df = read_existing_csv(log_path)
+        if not log_df.empty and {"cik10", "status"}.issubset(log_df.columns):
+            done_ciks = set(log_df.loc[log_df["status"].eq("ok"), "cik10"].astype(str))
+
+    groups = list(old.groupby("cik10", sort=False))
+    total = len(groups)
+    started_at = time.time()
+    active_done = 0
+    print(progress_message(0, total, started_at, active_done), flush=True)
+    for n, (cik10, grp) in enumerate(groups, start=1):
+        gvkey = first_present(grp.iloc[0], ["gvkey"])
+        if args.resume and cik10 in done_ciks:
+            print(f"[{n}/{total}] CIK {cik10} skipped (already ok)", flush=True)
+            continue
+        print(f"[{n}/{total}] CIK {cik10} ({len(grp)} letters from filing CSV)", flush=True)
+        rows = []
+        errors = []
+        for _, filing in grp.iterrows():
+            row_out, err = extract_letter_row(filing, cik10, gvkey, args, text_dir, raw_dir)
+            if row_out is not None:
+                rows.append(row_out)
+            if err:
+                errors.append(err)
+        append_csv(filing_path, rows, FILING_COLUMNS)
+        append_csv(
+            log_path,
+            [{
+                "cik10": cik10,
+                "gvkey": gvkey,
+                "status": "ok",
+                "n_metadata_rows": "",
+                "n_comment_rows": len(grp),
+                "error": "; ".join(errors),
+            }],
+            ["cik10", "gvkey", "status", "n_metadata_rows", "n_comment_rows", "error"],
+        )
+        active_done += 1
+        if args.progress_every > 0 and n % args.progress_every == 0:
+            print(progress_message(n, total, started_at, active_done), flush=True)
+
+    rebuild_firmyear(filing_path, firmyear_path)
+    print(progress_message(total, total, started_at, active_done), flush=True)
+
+
 def first_nonempty(values: pd.Series) -> str:
     for value in values:
         if value is None or pd.isna(value):
@@ -413,7 +659,8 @@ def read_panel_for_ciks(path: Path, cik_cols: List[str]) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--panel", required=True, help="Firm-year panel (.csv or .dta) with cik10, cik_string, or cik column")
+    parser.add_argument("--panel", default="", help="Firm-year panel (.csv or .dta) with cik10, cik_string, or cik column")
+    parser.add_argument("--filing-csv", default="", help="Existing filing-level CSV with SEC archive URLs to re-download/extract")
     parser.add_argument("--outdir", required=True, help="Output directory")
     parser.add_argument("--cik-cols", nargs="*", default=["cik10", "cik_string", "cik"], help="Candidate CIK columns, in priority order")
     parser.add_argument("--start-year", type=int, default=2003)
@@ -431,12 +678,25 @@ def main() -> None:
 
     outdir = Path(args.outdir)
     text_dir = outdir / "comment_texts"
+    raw_dir = outdir / "raw_filings"
     filing_path = outdir / "sec_comment_letter_filing_level.csv"
     firmyear_path = outdir / "sec_comment_firmyear.csv"
     log_path = outdir / "crawl_log.csv"
     outdir.mkdir(parents=True, exist_ok=True)
     text_dir.mkdir(parents=True, exist_ok=True)
+    raw_dir.mkdir(parents=True, exist_ok=True)
     write_empty_outputs(filing_path, firmyear_path, log_path)
+
+    if args.filing_csv:
+        recrawl_from_filing_csv(args, text_dir, raw_dir, filing_path, firmyear_path, log_path)
+        print("Done.")
+        print(f"Filing-level output: {filing_path}")
+        print(f"Firm-year output:    {firmyear_path}")
+        print(f"Crawl log:           {log_path}")
+        return
+
+    if not args.panel:
+        raise ValueError("Provide --panel for CIK metadata crawl or --filing-csv for URL re-extraction.")
 
     sample = read_panel_for_ciks(Path(args.panel), args.cik_cols)
     sample.to_csv(outdir / "sample_cik.csv", index=False)
@@ -511,12 +771,28 @@ def main() -> None:
 
             safe_acc = re.sub(r"[^0-9A-Za-z]", "", accession)
             safe_doc = re.sub(r"[^0-9A-Za-z_.-]", "_", primary_doc)
+            raw_path = raw_dir / f"{cik10}_{safe_acc}_{safe_doc}"
             text_path = text_dir / f"{cik10}_{safe_acc}_{safe_doc}.txt"
 
-            if text_path.exists():
-                text = text_path.read_text(encoding="utf-8", errors="ignore")
+            extract_info: Dict[str, object]
+            text = reusable_existing_text(text_path)
+            if text is not None:
+                extract_info = {
+                    "source_doc_type": source_doc_type(url, primary_doc, raw_path.read_bytes()[:16] if raw_path.exists() else b""),
+                    "extraction_method": "existing_text",
+                    "text_extraction_error": "",
+                    "text_starts_raw_pdf": text_starts_raw_pdf(text),
+                }
             else:
-                text, text_error = fetch_text(url, args.user_agent, sleep=args.sleep)
+                if raw_path.exists():
+                    payload = raw_path.read_bytes()
+                    extract_info = extract_document_text(payload, url, primary_doc)
+                else:
+                    payload, extract_info = fetch_document_text(url, primary_doc, args.user_agent, sleep=args.sleep)
+                    if payload:
+                        raw_path.write_bytes(payload)
+                text = str(extract_info.get("text", ""))
+                text_error = str(extract_info.get("text_extraction_error", ""))
                 if text_error:
                     letter_errors.append(f"{accession}: {text_error}")
                 text_path.write_text(text, encoding="utf-8", errors="ignore")
@@ -533,8 +809,13 @@ def main() -> None:
                     "reportDate": filing.get("reportDate", ""),
                     "primary_doc": primary_doc,
                     "url": url,
+                    "source_doc_type": extract_info.get("source_doc_type", ""),
+                    "extraction_method": extract_info.get("extraction_method", ""),
+                    "raw_file": str(raw_path),
                     "text_file": str(text_path),
                     "text_length": len(text),
+                    "text_extraction_error": extract_info.get("text_extraction_error", ""),
+                    "text_starts_raw_pdf": extract_info.get("text_starts_raw_pdf", 0),
                     **cls,
                 }
             )

@@ -47,13 +47,23 @@ UPLOAD
 
 `UPLOAD` is the SEC-originated comment letter. The code excludes `CORRESP` because company responses are not the intended source of regulatory disclosure pressure.
 
-For each retained filing, the crawler downloads the primary document from the SEC archive. The downloaded text is stored under:
+For each retained filing, the crawler downloads the primary document from the SEC archive. The raw source document is stored under:
+
+```text
+output/raw_filings/
+```
+
+The extracted plain text is stored under:
 
 ```text
 output/comment_texts/
 ```
 
-The crawler is resumable. If text files already exist and a CIK has been logged as completed, the script can skip it when `--resume` is used.
+The crawler distinguishes PDF, TXT, and HTML source documents. PDF letters are extracted with `pdfminer.six`; TXT and HTML documents are decoded directly, with HTML tags stripped. The filing-level metadata records `source_doc_type`, `extraction_method`, `raw_file`, `text_file`, `text_length`, `text_extraction_error`, and `text_starts_raw_pdf`.
+
+The raw-PDF guard is important. If extracted text still begins with `%PDF`, the code treats the extraction as failed and does not silently pass raw PDF bytes to the classifier.
+
+The crawler is resumable. Existing extracted text is reused only when the text file is non-empty and does not begin with `%PDF`. If a previous run left an empty file or raw PDF text, the document is retried.
 
 Use a descriptive SEC User-Agent and a reasonable request delay. The default workflow is intentionally serial and resumable.
 
@@ -189,6 +199,7 @@ Recommended technical checks:
 1. Confirm `sample_cik.csv` has non-empty 10-digit CIKs.
 2. Confirm downloaded filing-level output contains only `UPLOAD`.
 3. Confirm `comment_year` is within the intended sample window.
-4. Inspect examples with positive equity-FCE flags.
-5. Inspect false-positive flags around compensation, EPS, and generic common-stock comments.
-6. Confirm the preferred peer variable is missing when an industry-year has no peers.
+4. Confirm `text_starts_raw_pdf` is zero before running the classifier.
+5. Inspect examples with positive equity-FCE flags, separately for PDF-extracted and TXT/HTML letters.
+6. Inspect false-positive flags around compensation, EPS, and generic common-stock comments.
+7. Confirm the preferred peer variable is missing when an industry-year has no peers.

@@ -519,6 +519,10 @@ def read_text_file(path: Path) -> str:
     return ""
 
 
+def is_raw_pdf_text(text: str) -> bool:
+    return (text or "").lstrip().startswith("%PDF")
+
+
 def guess_col(df: pd.DataFrame, candidates: List[str]) -> Optional[str]:
     lower_map = {c.lower().strip(): c for c in df.columns}
     for cand in candidates:
@@ -652,6 +656,10 @@ def process_letters(args: argparse.Namespace) -> Tuple[pd.DataFrame, pd.DataFram
     text_path_col = guess_col(meta, ["text_file", "text_path", "filepath", "file_path", "path"])
     filename_col = guess_col(meta, ["filename", "primary_doc", "primaryDocument", "file_name"])
     url_col = guess_col(meta, ["url", "filing_url", "document_url"])
+    source_doc_type_col = guess_col(meta, ["source_doc_type", "doc_type", "document_type"])
+    extraction_method_col = guess_col(meta, ["extraction_method", "text_extraction_method"])
+    extraction_error_col = guess_col(meta, ["text_extraction_error", "extraction_error"])
+    text_starts_raw_pdf_col = guess_col(meta, ["text_starts_raw_pdf", "raw_pdf_text"])
 
     logging.info("Column mapping: cik=%s gvkey=%s accession=%s year=%s date=%s form=%s text_path=%s filename=%s",
                  cik_col, gvkey_col, accession_col, year_col, date_col, form_col, text_path_col, filename_col)
@@ -663,6 +671,7 @@ def process_letters(args: argparse.Namespace) -> Tuple[pd.DataFrame, pd.DataFram
     letter_rows: List[Dict[str, object]] = []
     missing_text = 0
     empty_text = 0
+    raw_pdf_text = 0
     started_at = time.time()
     total_rows = len(meta)
 
@@ -676,6 +685,12 @@ def process_letters(args: argparse.Namespace) -> Tuple[pd.DataFrame, pd.DataFram
             continue
 
         raw_text = read_text_file(text_path)
+        if is_raw_pdf_text(raw_text):
+            raw_pdf_text += 1
+            msg = f"Raw PDF bytes detected in text file; rerun crawler with PDF extraction: {text_path}"
+            if not args.allow_raw_pdf_text:
+                raise RuntimeError(msg)
+            logging.warning(msg)
         text = clean_text(raw_text)
         if not text:
             empty_text += 1
@@ -709,6 +724,10 @@ def process_letters(args: argparse.Namespace) -> Tuple[pd.DataFrame, pd.DataFram
             "form": row.get(form_col) if form_col else "UPLOAD",
             "url": url,
             "text_file": str(text_path),
+            "source_doc_type": row.get(source_doc_type_col) if source_doc_type_col else "",
+            "extraction_method": row.get(extraction_method_col) if extraction_method_col else "",
+            "text_extraction_error": row.get(extraction_error_col) if extraction_error_col else "",
+            "text_starts_raw_pdf": row.get(text_starts_raw_pdf_col) if text_starts_raw_pdf_col else int(is_raw_pdf_text(raw_text)),
             "letter_text_length": len(text),
             "n_comment_items_detected": len(items),
         }
@@ -790,6 +809,8 @@ def process_letters(args: argparse.Namespace) -> Tuple[pd.DataFrame, pd.DataFram
         logging.warning("Missing text files for %s metadata rows.", missing_text)
     if empty_text:
         logging.warning("Empty text files for %s metadata rows.", empty_text)
+    if raw_pdf_text:
+        logging.warning("Raw PDF text files encountered: %s", raw_pdf_text)
 
     items_df = pd.DataFrame(item_rows)
     letters_df = pd.DataFrame(letter_rows)
@@ -916,6 +937,11 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=None, help="Optional number of metadata rows to process for testing.")
     parser.add_argument("--progress-every", type=int, default=5000, help="Print progress every N processed letters.")
     parser.add_argument("--drop-empty-text", action="store_true", help="Drop rows whose resolved text file is empty.")
+    parser.add_argument(
+        "--allow-raw-pdf-text",
+        action="store_true",
+        help="Allow text files that still begin with %%PDF. Default is to stop because PDF extraction failed.",
+    )
     return parser.parse_args(argv)
 
 

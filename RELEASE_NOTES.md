@@ -9,6 +9,7 @@ Included:
 - firm-year panel input;
 - automatic CIK extraction from the panel;
 - SEC `UPLOAD` comment-letter crawler;
+- PDF-aware text extraction with raw-PDF safeguards;
 - rule-based SEC comment-letter topic classifier;
 - firm-year topic aggregation;
 - firm-year SEC Equity Disclosure Pressure as an intermediate output;
