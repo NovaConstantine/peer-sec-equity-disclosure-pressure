@@ -1,0 +1,4 @@
+gvkey,cik10,accession,filing_date_public,url,text_file,n_items,n_CFULLX,n_CFULLX_eq_any,n_SRCFUNDS_denominator,num_CFULLX,num_any_CFULLX,den_CFULLX_SRCFUNDS,den_any_CFULLX_SRCFUNDS
+000002,0000000002,0000000002-07-000001,2007-02-15,https://www.sec.gov/example1,example1.txt,2,1,1,1,1,1,1,1
+000003,0000000003,0000000003-07-000001,2007-02-20,https://www.sec.gov/example2,example2.txt,1,0,0,1,0,0,1,1
+000001,0000000001,0000000001-07-000001,2007-02-25,https://www.sec.gov/example3,example3.txt,1,1,1,1,1,1,1,1

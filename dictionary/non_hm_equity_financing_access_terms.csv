@@ -1,0 +1,41 @@
+﻿term_id,term,regex,term_family,source_basis
+term_0192_21813b3e,"\b(?:common stock|equity securities|equity|stock).{0,80}\bprivate placements?\b","\b(?:common stock|equity securities|equity|stock).{0,80}\bprivate placements?\b",Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0205_4aa21b55,\baccess equity markets\b,\baccess equity markets\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0210_15373d9f,\badditional equity offering\b,\badditional equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0245_7f8d52f0,\bcommon stock offerings?\b,\bcommon stock offerings?\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0248_efd810de,\bconsidering equity offering\b,\bconsidering equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0249_5c59f6a3,\bconsummates equity offering\b,\bconsummates equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0272_84ed8ecb,\bequity capital\b,\bequity capital\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0274_03e371fc,\bequity financ(?:ing|ings)\b,\bequity financ(?:ing|ings)\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0280_47523aca,\bequity offering would add\b,\bequity offering would add\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0282_e734a99b,\bequity offerings?\b,\bequity offerings?\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0285_a461a6b4,\bequity securities\b,\bequity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0286_fa8b0458,\bexpects equity securities\b,\bexpects equity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0307_1b2d446c,\bissu(?:e|ed|ing) common stock\b,\bissu(?:e|ed|ing) common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0312_ec722fa4,\bissuances? of common stock\b,\bissuances? of common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0316_c4d9a435,\bissuing common stock\b,\bissuing common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0317_2129e411,\bissuing equity securities\b,\bissuing equity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0359_9db5a0c1,\boffering equity securities\b,\boffering equity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0369_fde869f6,\bplanned equity offering\b,\bplanned equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0374_b8e003ca,"\bprivate placements?.{0,80}\b(?:common stock|equity securities|equity|stock)\b","\bprivate placements?.{0,80}\b(?:common stock|equity securities|equity|stock)\b",Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0377_4ae3c27a,\bpublic offering of (?:common stock|equity securities)\b,\bpublic offering of (?:common stock|equity securities)\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0381_c36c4ec0,\bpursue equity offering\b,\bpursue equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0384_bc99858f,\brais(?:e|es|ed|ing) equity\b,\brais(?:e|es|ed|ing) equity\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0391_1ae00a35,\braise equity offering\b,\braise equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0394_e12a1b81,\braised equity arrangements\b,\braised equity arrangements\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0395_dba42ab7,\braises equity capital\b,\braises equity capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage
+term_0400_55e92e85,\bregistered offering of (?:common stock|equity securities)\b,\bregistered offering of (?:common stock|equity securities)\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0406_8816a6d2,\bsale of common stock\b,\bsale of common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0409_6d3ff52c,\bsales of common stock\b,\bsales of common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0413_f9b7a9ff,\bseek equity financing\b,\bseek equity financing\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0415_b0dc3ec6,\bseek equity financings\b,\bseek equity financings\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0416_be103e74,\bseek equity investments\b,\bseek equity investments\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0417_a9e47354,\bseek equity offering\b,\bseek equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0418_5c8043a3,\bsell common stock\b,\bsell common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0422_b51da9b4,\bselling common stock\b,\bselling common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0439_dd8c6125,\bsources equity financing\b,\bsources equity financing\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0440_5b7a45f9,\bsources equity offering\b,\bsources equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0447_85542d5a,\bstock issuance\b,\bstock issuance\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0453_240cc730,\bthrough equity financing\b,\bthrough equity financing\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0458_fcbe3ad8,\bundertake equity offerings\b,\bundertake equity offerings\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage
+term_0462_23ecaae6,\buse equity offerings\b,\buse equity offerings\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage

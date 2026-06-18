@@ -1,0 +1,119 @@
+term_id,term,regex,term_family,source_basis,equity_financing_access_signal,financing_disclosure_context_signal,general_financing_disclosure_scope,nonfinancing_compensation_accounting_exclusion
+term_0005_8d75b358,access equity markets,\baccess\s+equity\s+markets\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0012_8081dc62,additional equity offering,\badditional\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0042_c29d6e03,considering equity offering,\bconsidering\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0044_ed68c9a3,consummates equity offering,\bconsummates\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0079_dd22737e,equity offering would add,\bequity\s+offering\s+would\s+add\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0085_a47e577d,expects equity securities,\bexpects\s+equity\s+securities\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0116_0f9d8580,issuing common stock,\bissuing\s+common\s+stock\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0119_53056455,issuing equity securities,\bissuing\s+equity\s+securities\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0128_d79687aa,offering equity securities,\boffering\s+equity\s+securities\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0132_24bace1f,planned equity offering,\bplanned\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0139_8c0b8268,pursue equity offering,\bpursue\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0146_4ff2def9,raise equity offering,\braise\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0149_c1c63602,raised equity arrangements,\braised\s+equity\s+arrangements\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0151_2919de11,raises equity capital,\braises\s+equity\s+capital\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0166_f01aeff4,seek equity financing,\bseek\s+equity\s+financing\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0167_1f67ff99,seek equity financings,\bseek\s+equity\s+financings\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0168_e596acbc,seek equity investments,\bseek\s+equity\s+investments\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0169_5c7b063a,seek equity offering,\bseek\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0170_6b7c0ece,sell common stock,\bsell\s+common\s+stock\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0171_add87805,selling common stock,\bselling\s+common\s+stock\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0177_97608143,sources equity financing,\bsources\s+equity\s+financing\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0178_564ee45e,sources equity offering,\bsources\s+equity\s+offering\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0185_6be04c9e,through equity financing,\bthrough\s+equity\s+financing\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0188_43f22f34,undertake equity offerings,\bundertake\s+equity\s+offerings\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0189_4c398534,use equity offerings,\buse\s+equity\s+offerings\b,HM equity-focused financing phrase,Hoberg and Maksimovic equity-focused phrase list,1,0,0,0
+term_0192_21813b3e,"\b(?:common stock|equity securities|equity|stock).{0,80}\bprivate placements?\b","\b(?:common stock|equity securities|equity|stock).{0,80}\bprivate placements?\b",Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0205_4aa21b55,\baccess equity markets\b,\baccess equity markets\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0210_15373d9f,\badditional equity offering\b,\badditional equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0245_7f8d52f0,\bcommon stock offerings?\b,\bcommon stock offerings?\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0248_efd810de,\bconsidering equity offering\b,\bconsidering equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0249_5c59f6a3,\bconsummates equity offering\b,\bconsummates equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0272_84ed8ecb,\bequity capital\b,\bequity capital\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0274_03e371fc,\bequity financ(?:ing|ings)\b,\bequity financ(?:ing|ings)\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0280_47523aca,\bequity offering would add\b,\bequity offering would add\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0282_e734a99b,\bequity offerings?\b,\bequity offerings?\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0285_a461a6b4,\bequity securities\b,\bequity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0286_fa8b0458,\bexpects equity securities\b,\bexpects equity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0307_1b2d446c,\bissu(?:e|ed|ing) common stock\b,\bissu(?:e|ed|ing) common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0312_ec722fa4,\bissuances? of common stock\b,\bissuances? of common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0316_c4d9a435,\bissuing common stock\b,\bissuing common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0317_2129e411,\bissuing equity securities\b,\bissuing equity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0359_9db5a0c1,\boffering equity securities\b,\boffering equity securities\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0369_fde869f6,\bplanned equity offering\b,\bplanned equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0374_b8e003ca,"\bprivate placements?.{0,80}\b(?:common stock|equity securities|equity|stock)\b","\bprivate placements?.{0,80}\b(?:common stock|equity securities|equity|stock)\b",Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0377_4ae3c27a,\bpublic offering of (?:common stock|equity securities)\b,\bpublic offering of (?:common stock|equity securities)\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0381_c36c4ec0,\bpursue equity offering\b,\bpursue equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0384_bc99858f,\brais(?:e|es|ed|ing) equity\b,\brais(?:e|es|ed|ing) equity\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0391_1ae00a35,\braise equity offering\b,\braise equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0394_e12a1b81,\braised equity arrangements\b,\braised equity arrangements\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0395_dba42ab7,\braises equity capital\b,\braises equity capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,1,0,0,0
+term_0400_55e92e85,\bregistered offering of (?:common stock|equity securities)\b,\bregistered offering of (?:common stock|equity securities)\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0406_8816a6d2,\bsale of common stock\b,\bsale of common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0409_6d3ff52c,\bsales of common stock\b,\bsales of common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0413_f9b7a9ff,\bseek equity financing\b,\bseek equity financing\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0415_b0dc3ec6,\bseek equity financings\b,\bseek equity financings\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0416_be103e74,\bseek equity investments\b,\bseek equity investments\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0417_a9e47354,\bseek equity offering\b,\bseek equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0418_5c8043a3,\bsell common stock\b,\bsell common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0422_b51da9b4,\bselling common stock\b,\bselling common stock\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0439_dd8c6125,\bsources equity financing\b,\bsources equity financing\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0440_5b7a45f9,\bsources equity offering\b,\bsources equity offering\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0447_85542d5a,\bstock issuance\b,\bstock issuance\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0453_240cc730,\bthrough equity financing\b,\bthrough equity financing\b,Equity financing and market access,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0458_fcbe3ad8,\bundertake equity offerings\b,\bundertake equity offerings\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0462_23ecaae6,\buse equity offerings\b,\buse equity offerings\b,Equity securities and offerings,SEC securities/offering disclosure language and SEC comment-letter usage,1,0,0,0
+term_0302_d73b27fc,\binability to (?:raise|obtain|access|secure|fund|finance)\b,\binability to (?:raise|obtain|access|secure|fund|finance)\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,1,0
+term_0343_7f2c3f60,\bmay not be able to (?:raise|obtain|access|secure|fund|finance)\b,\bmay not be able to (?:raise|obtain|access|secure|fund|finance)\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,1,0
+term_0444_1ab9cb83,\bsources? of funds\b,\bsources? of funds\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,1,0
+term_0445_9a754d5b,\bsources? of liquidity\b,\bsources? of liquidity\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,1,0
+term_0455_209811c7,\bunable to (?:raise|obtain|access|secure|fund|finance)\b,\bunable to (?:raise|obtain|access|secure|fund|finance)\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,1,0
+term_0031_f8f73dc5,capital resources,\bcapital\s+resources\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0100_c9870bde,going concern,\bgoing\s+concern\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,0,0
+term_0182_23b50aea,substantial doubt,\bsubstantial\s+doubt\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,0,0
+term_0215_9d2bfc8c,\banticipated sources? of funds\b,\banticipated sources? of funds\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0236_74a56d75,\bcapital resources\b,\bcapital resources\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0238_7fbea69d,\bcash flows?\b,\bcash flows?\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0240_d26b2e94,\bcash requirements?\b,\bcash requirements?\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0290_30be4912,\bfinancing arrangements?\b,\bfinancing arrangements?\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0300_9f6a6ce2,\bgoing concern\b,\bgoing concern\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,0,0
+term_0306_a3ba5692,\binternal and external sources? of liquidity\b,\binternal and external sources? of liquidity\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0320_cb8372be,\bknown (?:trends?|demands?|commitments?|events?|uncertainties)\b,\bknown (?:trends?|demands?|commitments?|events?|uncertainties)\b,Known trends and uncertainties context,SEC MD&A known trends and uncertainties disclosure framework,0,1,0,0
+term_0329_0ae3ac22,\bliquidity and capital resources\b,\bliquidity and capital resources\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0331_a43a48c2,\bliquidity\b,\bliquidity\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0335_8615db83,\bmanagement'?s discussion and analysis\b,\bmanagement'?s discussion and analysis\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0338_cde8401f,\bmaterial cash requirements?\b,\bmaterial cash requirements?\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0341_170fd0d1,\bmay be unable to (?:raise|obtain|access|secure|fund|finance)\b,\bmay be unable to (?:raise|obtain|access|secure|fund|finance)\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,0,0
+term_0345_6f58b124,\bMD&A\b,\bMD&A\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0451_c4547157,\bsubstantial doubt\b,\bsubstantial doubt\b,Financial constraint and going-concern context,SEC comment-letter usage for financing stress and going-concern disclosure contexts,0,1,0,0
+term_0465_f5255c50,\bworking capital\b,\bworking capital\b,MD&A liquidity and source-of-funds context,SEC MD&A liquidity/source-of-funds disclosure framework and SEC comment-letter usage,0,1,0,0
+term_0204_27602930,\baccess capital\b,\baccess capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0206_bef22f84,\baccess to (?:the )?capital markets?\b,\baccess to (?:the )?capital markets?\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0207_32a84d22,\baccess to capital\b,\baccess to capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0211_5f0aba97,\badditional financing\b,\badditional financing\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0229_7644d44a,\bborrowings?\b,\bborrowings?\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0251_117f9d20,\bconvertible notes?\b,\bconvertible notes?\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0256_3a31dc14,\bcredit facility\b,\bcredit facility\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0260_ae427b35,\bdebt financing\b,\bdebt financing\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0261_328750c5,\bdebt financings\b,\bdebt financings\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0262_93ab090a,\bdebt securities\b,\bdebt securities\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0287_65b5e5a7,\bexternal financing\b,\bexternal financing\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0291_3c75b9a3,\bfinancing sources?\b,\bfinancing sources?\b,Source-of-funds and liquidity,SEC MD&A liquidity/source-of-funds language and SEC comment-letter usage,0,0,1,0
+term_0298_2d8a4107,\bfuture financing\b,\bfuture financing\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0327_b4282727,\bline of credit\b,\bline of credit\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0353_e8fee234,\bnotes payable\b,\bnotes payable\b,Debt and credit financing,SEC financing-disclosure rationale and SEC comment-letter usage,0,0,1,0
+term_0356_26ed8041,\bobtain (?:additional )?financing\b,\bobtain (?:additional )?financing\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0358_6401784c,\bobtain capital\b,\bobtain capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0382_f2dd7086,\brais(?:e|es|ed|ing) capital\b,\brais(?:e|es|ed|ing) capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0387_5299a2a9,\braise additional capital\b,\braise additional capital\b,External financing and capital access,SEC MD&A external-liquidity/source-of-funds rationale and SEC comment-letter usage,0,0,1,0
+term_0435_62f27b32,\bsource of (?:cash|funds|liquidity|financing)\b,\bsource of (?:cash|funds|liquidity|financing)\b,Source-of-funds and liquidity,SEC MD&A liquidity/source-of-funds language and SEC comment-letter usage,0,0,1,0
+term_0217_e85a3101,\bASC 718\b,\bASC 718\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0226_d8592db3,\bbenefit plan\b,\bbenefit plan\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0273_8c5aabcf,\bequity compensation\b,\bequity compensation\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0289_e38c6021,\bfair value\b,\bfair value\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0363_e317a1e8,\boption awards?\b,\boption awards?\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0380_04cc92ec,\bpurchase price allocation\b,\bpurchase price allocation\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0426_e2f3de56,\bshare-based compensation\b,\bshare-based compensation\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0449_7def5810,\bstock-based compensation\b,\bstock-based compensation\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
+term_0464_51d60a8b,\bwarrant accounting\b,\bwarrant accounting\b,Non-financing compensation/accounting/valuation,Exclusion category identified from SEC comment-letter accounting/compensation contexts,0,0,0,1
